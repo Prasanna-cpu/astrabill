@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: ${DATABASE_URL_LOCALHOST}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.tool.hbm2ddl: DEBUG
+    org.springframework.jdbc.core: DEBUG
+
+
+
+jwt:
+  secret: ${JWT_SECRET}
+  header: ${JWT_HEADER}
+
+
+
+server:
+  port: ${PORT}
