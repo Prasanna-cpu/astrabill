@@ -1,9 +1,11 @@
 package com.spring.astrabill.backend.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,7 +21,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+
+    private final JWTValidator jwtValidator;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -31,7 +37,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/super-admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
-                .addFilterBefore(new JWTValidator(), BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtValidator, BasicAuthenticationFilter.class)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .build();
     }

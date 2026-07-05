@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.util.List;
 
+@Component
 public class JWTValidator extends OncePerRequestFilter {
 
     @Value("${jwt.secret}")
@@ -41,8 +43,14 @@ public class JWTValidator extends OncePerRequestFilter {
 
         String jwt = request.getHeader(jwtHeader != null ? jwtHeader : "Authorization");
 
-        if(jwt != null && jwt.startsWith("Bearer")){
+        if(jwtSecret == null){
+            throw new BadCredentialsException("JWT secret is not configured");
+        }
+
+        if(jwt != null && jwt.startsWith("Bearer ")){
             jwt = jwt.substring(7);
+//            System.out.println("Jwt: "+ jwt);
+//            System.out.println("Secret : "+ jwtSecret);
             try{
                 SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
                 Claims claims = Jwts

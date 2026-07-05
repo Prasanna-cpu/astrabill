@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = {Exception.class, RuntimeException.class})
+@Transactional(rollbackFor = {Exception.class, RuntimeException.class, ForbiddenActivityException.class, ConflictingResourcesException.class, ObjectNotFoundException.class})
 @Slf4j
 public class AuthServiceImplementation implements AuthService {
 
