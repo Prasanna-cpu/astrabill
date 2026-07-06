@@ -34,4 +34,8 @@ public class UserDTO {
     private Boolean verified = false;
 
     private LocalDateTime lastLogin;
+
+    private StoreDTO store;
+
+    private String storeId;
 }

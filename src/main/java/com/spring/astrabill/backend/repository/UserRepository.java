@@ -4,6 +4,7 @@ import com.spring.astrabill.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
@@ -16,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("select case when count(u) > 0 then true else false end from User u where u.email = ?1")
     Boolean existsByEmail(String email);
+
+    @Query("select u from User u where u.store.id = ?1")
+    List<User> findByStoreId(String storeId);
 }

@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,6 +44,9 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRoles role;
+
+    @OneToOne(mappedBy = "storeAdmin")
+    private Store store;
 
     @Column(name = "verified", nullable = false)
     private Boolean verified = false;
