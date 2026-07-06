@@ -16,6 +16,12 @@ public class UserMapper {
         userDTO.setLastLogin(user.getLastLogin());
         userDTO.setVerified(user.getVerified());
 
+        if(user.getStore() != null){
+            userDTO.setStoreId(user.getStore().getId());
+        }
+
+
+
 
         return userDTO;
     }
@@ -23,7 +29,7 @@ public class UserMapper {
     public static User mapToUser(UserDTO userDTO){
         User user = new User();
 
-        // user.setId(userDTO.getId());
+        user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setFullName(userDTO.getFullName());
@@ -31,6 +37,10 @@ public class UserMapper {
         user.setRole(userDTO.getRole());
         user.setLastLogin(userDTO.getLastLogin());
         user.setVerified(userDTO.getVerified());
+
+        if(userDTO.getStoreId() != null){
+            user.setStore(StoreMapper.mapToStore(userDTO.getStore()));
+        }
 
         return user;
     }
