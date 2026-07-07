@@ -13,8 +13,11 @@ public class StoreMapper {
 
         storeDTO.setId(store.getId());
         storeDTO.setBrand(store.getBrand());
-        storeDTO.setStoreAdmin(UserMapper.mapToUserDTO(store.getStoreAdmin()));
-        storeDTO.setStoreAdminId(store.getStoreAdmin() != null ? store.getStoreAdmin().getId() : null);
+        if (store.getStoreAdmin() != null) {
+            storeDTO.setStoreAdmin(UserMapper.mapToUserDTO(store.getStoreAdmin()));
+        }
+        storeDTO.setStoreAdminId(store.getStoreAdminId() != null ? store.getStoreAdminId() : 
+            (store.getStoreAdmin() != null ? store.getStoreAdmin().getId() : null));
         storeDTO.setStoreType(store.getStoreType());
         storeDTO.setDescription(store.getDescription());
         storeDTO.setStatus(store.getStatus());
@@ -44,13 +47,20 @@ public class StoreMapper {
 
         Store store = new Store();
 
+        if (storeDTO.getId() != null) {
+            store.setId(storeDTO.getId());
+        }
 
         store.setBrand(storeDTO.getBrand());
         store.setStoreAdmin(storeAdmin);
+        store.setStoreAdminId(storeAdmin.getId());
         store.setStoreType(storeDTO.getStoreType());
         store.setDescription(storeDTO.getDescription());
         store.setStatus(storeDTO.getStatus());
         store.setStoreContact(storeDTO.getStoreContact());
+
+        // Set bidirectional relationship
+        storeAdmin.setStore(store);
 
         return store;
 

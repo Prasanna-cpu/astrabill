@@ -45,7 +45,8 @@ public class User extends BaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRoles role;
 
-    @OneToOne(mappedBy = "storeAdmin")
+    @OneToOne
+    @JoinColumn(name = "store_id")
     private Store store;
 
     @Column(name = "verified", nullable = false)

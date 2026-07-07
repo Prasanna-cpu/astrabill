@@ -25,9 +25,11 @@ public class Store extends BaseEntity implements Serializable {
     @Column(name = "brand", nullable = false)
     private String brand;
 
-    @OneToOne
-    @JoinColumn(name = "store_admin_id", nullable = false)
+    @OneToOne(mappedBy = "store")
     private User storeAdmin;
+
+    @Column(name = "store_admin_id")
+    private String storeAdminId;
 
     @Column(name = "store_type", nullable = false)
     private String storeType;
