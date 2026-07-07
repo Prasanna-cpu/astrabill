@@ -17,9 +17,10 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query("select p from Product p where p.store.id = :storeId and " +
             "(" +
-            "lower(p.name) like lower(concat('%', :query ,'%'))) or " +
-            "lower(p.brand) like  lower(concat('%', :query ,'%')) or " +
-            "lower(p.stockKeepingUnit) like lower(concat('%', :query ,'%'))"
+            "lower(p.name) like lower(concat('%', :query ,'%')) or " +
+            "lower(p.brand) like lower(concat('%', :query ,'%')) or " +
+            "lower(p.stockKeepingUnit) like lower(concat('%', :query ,'%'))" +
+            ")"
     )
     List<Product> searchByKeyword(@Param("query") String query, @Param("storeId") String storeId);
 

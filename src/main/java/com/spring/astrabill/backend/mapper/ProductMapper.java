@@ -14,6 +14,7 @@ public class ProductMapper {
         productDTO.setStockKeepingUnit(product.getStockKeepingUnit());
         productDTO.setMaximumRetailPrice(product.getMaximumRetailPrice());
         productDTO.setSellingPrice(product.getSellingPrice());
+        productDTO.setDescription(product.getDescription());
         productDTO.setBrand(product.getBrand());
         productDTO.setImage(product.getImage());
 
@@ -37,6 +38,7 @@ public class ProductMapper {
         product.setStockKeepingUnit(productDTO.getStockKeepingUnit());
         product.setMaximumRetailPrice(productDTO.getMaximumRetailPrice());
         product.setSellingPrice(productDTO.getSellingPrice());
+        product.setDescription(productDTO.getDescription());
         product.setBrand(productDTO.getBrand());
         product.setImage(productDTO.getImage());
 
