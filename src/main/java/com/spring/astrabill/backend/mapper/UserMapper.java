@@ -1,6 +1,7 @@
 package com.spring.astrabill.backend.mapper;
 
 import com.spring.astrabill.backend.dto.UserDTO;
+import com.spring.astrabill.backend.entity.Store;
 import com.spring.astrabill.backend.entity.User;
 
 public class UserMapper {
@@ -29,7 +30,11 @@ public class UserMapper {
     public static User mapToUser(UserDTO userDTO){
         User user = new User();
 
-        user.setId(userDTO.getId());
+        if (userDTO.getId() != null) {
+            user.setId(userDTO.getId());
+        }
+
+//        user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setFullName(userDTO.getFullName());
@@ -39,7 +44,9 @@ public class UserMapper {
         user.setVerified(userDTO.getVerified());
 
         if(userDTO.getStoreId() != null){
-            user.setStore(StoreMapper.mapToStore(userDTO.getStore()));
+            Store store = new Store();
+            store.setId(userDTO.getStoreId());
+            user.setStore(store);
         }
 
         return user;

@@ -16,6 +16,7 @@ import com.spring.astrabill.backend.service.abstraction.StoreService;
 import com.spring.astrabill.backend.service.abstraction.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +39,14 @@ public class StoreServiceImplementation implements StoreService {
     @Override
     public StoreDTO createStore(StoreDTO storeDTO, UserDTO userDTO) {
 
-        UserDTO storeAdmin = userService.getUserById(userDTO.getId());
-        Store store = StoreMapper.mapToStore(storeDTO, UserMapper.mapToUser(storeAdmin));
+        User storeAdmin = userRepository
+                .findById(userDTO.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        Store store = StoreMapper.mapToStore(storeDTO, storeAdmin);
         Store savedStore = storeRepository.save(store);
+        storeAdmin.setStore(savedStore);
+        userRepository.save(storeAdmin);
         StoreDTO savedStoreDTO = StoreMapper.mapToStoreDTO(savedStore);
         return savedStoreDTO;
 
